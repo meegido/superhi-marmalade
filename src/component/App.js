@@ -1,4 +1,5 @@
-import React from 'react';
+/*global Mixcloud */
+import React, {Component} from 'react';
 import {  
   BrowserRouter as Router,  
   Route
@@ -11,8 +12,19 @@ const Home = () => <h1>Home</h1>
 const Archive = () => <h1>Archive</h1>
 const About = () => <h1>About</h1>
 
-function App() {
-  return (
+class App extends Component {
+ constructor(props) {
+    super(props)
+      this.player = React.createRef();
+  }
+
+  mountAudio = async => {
+    const widget = Mixcloud.PlayerWidget(this.player);
+    console.log(widget)
+  }
+
+  render() {
+   return (
     <Router>
       <div> 
         {/* this div contains our page (excluding audioplayer) */}
@@ -41,13 +53,14 @@ function App() {
             height="60" 
             src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fjuanfalibene%2Fsounds-healing-mixtape-2%2F" 
             frameBorder="0" 
-            className='player db fixed bottom-0 z-5'>
+            className='player db fixed bottom-0 z-5'
+            ref={this.player}>
           </iframe>
         </div>
       </div>
     </Router>
-   
-  );
+    );
+  }
 }
 
 export default App;
