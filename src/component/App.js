@@ -10,7 +10,7 @@ function App() {
       <div className='flex-l justify-end'>
         {/* FeatureMix (needs styling and updating */}
         <FeatureMix />
-         <div>
+         <div className='w-50-l relative z-1'>
           {/* Header */}
           <Header/>
           {/* Routed page */}
