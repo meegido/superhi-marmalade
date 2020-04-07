@@ -1,4 +1,4 @@
-import React, {Comopnent} from 'react'; 
+import React from 'react'; 
 
 const Header = props =>  (
   <div>
