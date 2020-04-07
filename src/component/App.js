@@ -18,9 +18,17 @@ class App extends Component {
       this.player = React.createRef();
   }
 
-  mountAudio = async => {
-    const widget = Mixcloud.PlayerWidget(this.player);
+  mountAudio = async () => {
+    const widget = Mixcloud.PlayerWidget(this.player.current);
+    // here we wait our widget to be ready before continuing
+    await widget.ready;
+    await widget.play();
     console.log(widget)
+  }
+
+  componentDidMount() {
+    // when our app component is all loaded into the page, our componentDidMount gests called and we can be sure everything isready, so we then run our mountAduo(Method)
+    this.mountAudio();
   }
 
   render() {
