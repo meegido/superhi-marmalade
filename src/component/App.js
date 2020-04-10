@@ -19,16 +19,25 @@ class App extends Component {
   }
 
   mountAudio = async () => {
-    const widget = Mixcloud.PlayerWidget(this.player.current);
+    // when we use the this keyword, our widget is now accesible anywhere inside the component.
+    this.widget = Mixcloud.PlayerWidget(this.player.current);
     // here we wait our widget to be ready before continuing
-    await widget.ready;
-    await widget.play();
-    console.log(widget)
+    await this.widget.ready;
   }
 
   componentDidMount() {
     // when our app component is all loaded into the page, our componentDidMount gests called and we can be sure everything isready, so we then run our mountAduo(Method)
     this.mountAudio();
+  }
+
+  play = async () => {
+    // we want to tootlePlay() mixcloud method on our widget
+    console.log('tooglePlay')
+    await this.widget.play();
+  }
+
+  pause = async () => {
+    await this.widget.pause();
   }
 
   render() {
@@ -43,6 +52,10 @@ class App extends Component {
             {/* Header */}
             <Header/>
             {/* Routed page */}
+            <div>
+              <button onClick={this.play}>Play</button>
+              <button onClick={this.pause}>Pause</button>
+            </div>
             <Route exact path="/">
               <Home />
             </Route>
