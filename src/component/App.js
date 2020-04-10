@@ -23,7 +23,6 @@ class App extends Component {
     this.widget = SC.Widget(this.player.current);
     // here we wait our widget to be ready before continuing
     await this.widget.READY;
-    console.log(this.widget)
   }
 
   componentDidMount() {
@@ -31,14 +30,11 @@ class App extends Component {
     this.mountAudio();
   }
 
-  play = async () => {
+  tooglePlay = async () => {
     // we want to tootlePlay() mixcloud method on our widget
-    console.log('tooglePlay')
+    await this.widget.toggle();
+   console.log('tooglePlay')
     // await this.widget.play();
-  }
-
-  pause = async () => {
-    // await this.widget.pause();
   }
 
   // playMix = mixName => {
@@ -59,8 +55,7 @@ class App extends Component {
             <Header/>
             {/* Routed page */}
             <div>
-              {/* <button onClick={this.play}>Play</button>
-              <button onClick={this.pause}>Pause</button> */}
+              <button onClick={this.tooglePlay}>Play/Pause</button>
             </div>
 
             <div>
@@ -84,7 +79,7 @@ class App extends Component {
             height="60" 
             scrolling="no" 
             frameBorder="no" 
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293"
+            src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/users/807541"
             allow='autoplay'
             className='player db fixed bottom-0 z-5'
             ref={this.player}>
