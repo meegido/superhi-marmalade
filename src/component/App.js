@@ -16,7 +16,7 @@ class App extends Component {
  constructor(props) {
     super(props)
       this.player = React.createRef();
-      this.song = 'https://api.soundcloud.com/users/807541'
+      this.userSongs = 'https://api.soundcloud.com/users/1106112';
   }
 
   mountAudio = async () => {
@@ -24,7 +24,6 @@ class App extends Component {
     this.widget = SC.Widget(this.player.current);
     // here we wait our widget to be ready before continuing
     await this.widget.READY;
-    this.widget.load(this.song)
   }
 
   componentDidMount() {
@@ -37,10 +36,10 @@ class App extends Component {
     await this.widget.toggle();
   }
 
-  // playMix = mixName => {
-  // // load a new mix by its name and then start playing it immediately
-  //   this.widget.load(mixName, true);
-  // }
+  playMix = () => {
+  // load a new mix in user songs list and then start playing it immediately
+    this.widget.next()
+  }
 
   render() {
    return (
@@ -59,7 +58,7 @@ class App extends Component {
             </div>
 
             <div>
-              {/* <button onClick={() => this.playMix('/El_Cuerpo_Del_Disco/la-casa-del-ácido-060718-pt-1')}>PlayMix</button> */}
+              <button onClick={this.playMix}>PlayMix</button>
             </div>
             <Route exact path="/">
               <Home />
@@ -79,7 +78,7 @@ class App extends Component {
             height="60" 
             scrolling="no" 
             frameBorder="no" 
-            src={`https://w.soundcloud.com/player/?url=${this.song}`}
+            src={`https://w.soundcloud.com/player/?url=${this.userSongs}`}
             allow='autoplay'
             className='player db fixed bottom-0 z-5'
             ref={this.player}>
