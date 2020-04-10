@@ -1,4 +1,4 @@
-/*global Mixcloud */
+/*global SC */
 import React, {Component} from 'react';
 import {  
   BrowserRouter as Router,  
@@ -20,9 +20,10 @@ class App extends Component {
 
   mountAudio = async () => {
     // when we use the this keyword, our widget is now accesible anywhere inside the component.
-    this.widget = Mixcloud.PlayerWidget(this.player.current);
+    this.widget = SC.Widget(this.player.current);
     // here we wait our widget to be ready before continuing
-    await this.widget.ready;
+    await this.widget.READY;
+    console.log(this.widget)
   }
 
   componentDidMount() {
@@ -33,12 +34,17 @@ class App extends Component {
   play = async () => {
     // we want to tootlePlay() mixcloud method on our widget
     console.log('tooglePlay')
-    await this.widget.play();
+    // await this.widget.play();
   }
 
   pause = async () => {
-    await this.widget.pause();
+    // await this.widget.pause();
   }
+
+  // playMix = mixName => {
+  // // load a new mix by its name and then start playing it immediately
+  //   this.widget.load(mixName, true);
+  // }
 
   render() {
    return (
@@ -53,8 +59,12 @@ class App extends Component {
             <Header/>
             {/* Routed page */}
             <div>
-              <button onClick={this.play}>Play</button>
-              <button onClick={this.pause}>Pause</button>
+              {/* <button onClick={this.play}>Play</button>
+              <button onClick={this.pause}>Pause</button> */}
+            </div>
+
+            <div>
+              {/* <button onClick={() => this.playMix('/El_Cuerpo_Del_Disco/la-casa-del-ácido-060718-pt-1')}>PlayMix</button> */}
             </div>
             <Route exact path="/">
               <Home />
@@ -72,8 +82,10 @@ class App extends Component {
           <iframe 
             width="100%" 
             height="60" 
-            src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fjuanfalibene%2Fsounds-healing-mixtape-2%2F" 
-            frameBorder="0" 
+            scrolling="no" 
+            frameBorder="no" 
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293"
+            allow='autoplay'
             className='player db fixed bottom-0 z-5'
             ref={this.player}>
           </iframe>
