@@ -24,8 +24,8 @@ class App extends Component {
 
       this.player = React.createRef();
       this.userMix = 'https://api.soundcloud.com/users/1106112';
-      this.mix = 'https://api.soundcloud.com/tracks/14960807';
-      this.newMix = 'https://api.soundcloud.com/tracks/567572268';
+      this.mix = 'https://api.soundcloud.com/tracks/14960807&auto_play=true';
+      this.newMix = 'https://api.soundcloud.com/tracks/567572268&auto_play=true';
   }
 
   mountAudio = async () => {
@@ -36,11 +36,11 @@ class App extends Component {
     console.log(this.widget)
     this.widget.bind(SC.Widget.Events.PAUSE, () => this.setState({
       playing: false
-    }))
+    }));
 
     this.widget.bind(SC.Widget.Events.PLAY, () => this.setState({
       playing: true
-    }))
+    }));
    
   }
 
@@ -48,10 +48,6 @@ class App extends Component {
   componentDidMount() {
     // when our app component is all loaded into the page, our componentDidMount gests called and we can be sure everything isready, so we then run our mountAduo(Method)
     this.mountAudio();
-
-   
-    
-   
   }
 
   tooglePlay = async () => {
@@ -60,10 +56,12 @@ class App extends Component {
   }
 
   playMix = async (mixName) => {
-  // load a new mix in user songs list and then start playing it immediately. this.widget.next()
-
+  // update the currentMix in our state with the mixID
+  this.setState({
+    currentMix: mixName
+  })
   // load a new mix by its name and then start playing it immediately
-    await this.widget.load(mixName)
+    await this.widget.load(mixName);
   }
 
   render() {
@@ -80,11 +78,16 @@ class App extends Component {
             {/* Routed page */}
 
             <div>
-              <button onClick={this.tooglePlay}>{this.state.playing ? 'Pause' : 'Play'}</button>
+              {this.state.playing && (
+                <button onClick={this.tooglePlay}>{this.state.playing ? 'Pause' : 'Play'}</button>
+              )}
             </div>
 
             <div>
-              <button onClick={() => this.playMix(`${this.newMix}`)}>Play mix</button>
+              <h1>currently playing: {this.state.currentMix}</h1>
+              <button onClick={() => this.playMix(`${this.newMix}`, {auto_play: true})}>Play mix</button>
+
+              <button onClick={() => this.playMix('https://api.soundcloud.com/tracks/135147847&auto_play=true')}>Play Nitsa mix</button>
             </div>
             <Route exact path="/">
               <Home />
