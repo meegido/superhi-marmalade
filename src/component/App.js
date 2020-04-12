@@ -15,6 +15,13 @@ const About = () => <h1>About</h1>
 class App extends Component {
  constructor(props) {
     super(props)
+      this.state = {
+        // whether a mix is currently playing
+        playing: false,
+        // the id of the current mix
+        currentMix: ''
+      }
+
       this.player = React.createRef();
       this.userMix = 'https://api.soundcloud.com/users/1106112';
       this.mix = 'https://api.soundcloud.com/tracks/14960807';
@@ -26,15 +33,29 @@ class App extends Component {
     this.widget = SC.Widget(this.player.current);
     // here we wait our widget to be ready before continuing
     await this.widget.READY;
+    console.log(this.widget)
+    this.widget.bind(SC.Widget.Events.PAUSE, () => this.setState({
+      playing: false
+    }))
+
+    this.widget.bind(SC.Widget.Events.PLAY, () => this.setState({
+      playing: true
+    }))
+   
   }
+
 
   componentDidMount() {
     // when our app component is all loaded into the page, our componentDidMount gests called and we can be sure everything isready, so we then run our mountAduo(Method)
     this.mountAudio();
+
+   
+    
+   
   }
 
   tooglePlay = async () => {
-    // we want to tootlePlay() mixcloud method on our widget
+    // we want to tooglePlay() mixcloud method on our widget
     await this.widget.toggle();
   }
 
@@ -57,12 +78,13 @@ class App extends Component {
             {/* Header */}
             <Header/>
             {/* Routed page */}
+
             <div>
-              <button onClick={this.tooglePlay}>Play/Pause</button>
+              <button onClick={this.tooglePlay}>{this.state.playing ? 'Pause' : 'Play'}</button>
             </div>
 
             <div>
-              <button onClick={() => this.playMix(`${this.newMix}`)}>PlayMix</button>
+              <button onClick={() => this.playMix(`${this.newMix}`)}>Play mix</button>
             </div>
             <Route exact path="/">
               <Home />
