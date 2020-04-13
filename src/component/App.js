@@ -44,24 +44,26 @@ class App extends Component {
    
   }
 
-
   componentDidMount() {
     // when our app component is all loaded into the page, our componentDidMount gests called and we can be sure everything isready, so we then run our mountAduo(Method)
     this.mountAudio();
   }
 
-  tooglePlay = async () => {
-    // we want to tooglePlay() mixcloud method on our widget
-    await this.widget.toggle();
-  }
+  actions = {
+  // we group our methods together inisde of an object called actions. 
+    tooglePlay: () => {
+      // we want to tooglePlay() mixcloud method on our widget
+      this.widget.toggle();
+    },
 
-  playMix = async (mixName) => {
-  // update the currentMix in our state with the mixID
-    this.setState({
-      currentMix: mixName
-    })
-  // load a new mix by its name and then start playing it immediately
-    await this.widget.load(mixName);
+    playMix: mixName => {
+    // update the currentMix in our state with the mixID
+      this.setState({
+        currentMix: mixName
+      })
+    // load a new mix by its name and then start playing it immediately
+      this.widget.load(mixName);
+    }
   }
 
   render() {
@@ -76,10 +78,9 @@ class App extends Component {
             {/* Header */}
             <Header/>
             {/* Routed page */}
-
-           
             <Route exact path="/">
-              <Home />
+              {/* here we pass our state and our actions DOWN into de home component so that we can use them */}
+              <Home {...this.state} {...this.actions}/>
             </Route>
             <Route path="/archive">
               <Archive />
