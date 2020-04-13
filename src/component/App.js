@@ -7,8 +7,8 @@ import {
 
 import FeatureMix from './FeatureMix';
 import Header from './Header';
+import Home from '../component/Home';
 
-const Home = () => <h1>Home</h1>
 const Archive = () => <h1>Archive</h1>
 const About = () => <h1>About</h1>
 
@@ -57,9 +57,9 @@ class App extends Component {
 
   playMix = async (mixName) => {
   // update the currentMix in our state with the mixID
-  this.setState({
-    currentMix: mixName
-  })
+    this.setState({
+      currentMix: mixName
+    })
   // load a new mix by its name and then start playing it immediately
     await this.widget.load(mixName);
   }
@@ -77,18 +77,7 @@ class App extends Component {
             <Header/>
             {/* Routed page */}
 
-            <div>
-              {this.state.playing && (
-                <button onClick={this.tooglePlay}>{this.state.playing ? 'Pause' : 'Play'}</button>
-              )}
-            </div>
-
-            <div>
-              <h1>currently playing: {this.state.currentMix}</h1>
-              <button onClick={() => this.playMix(`${this.newMix}`, {auto_play: true})}>Play mix</button>
-
-              <button onClick={() => this.playMix('https://api.soundcloud.com/tracks/135147847&auto_play=true')}>Play Nitsa mix</button>
-            </div>
+           
             <Route exact path="/">
               <Home />
             </Route>
@@ -120,3 +109,17 @@ class App extends Component {
 }
 
 export default App;
+
+
+//  <div>
+//  {this.state.playing && (
+//     <button onClick={this.tooglePlay}>{this.state.playing ? 'Pause' : 'Play'}</button>
+//   )}
+//  </div>
+
+// <div>
+//   <h1>currently playing: {this.state.currentMix}</h1>
+//      <button onClick={() => this.playMix(`${this.newMix}`, {auto_play: true})}>Play mix</button>
+
+//   <button onClick={() => this.playMix('https://api.soundcloud.com/tracks/135147847&auto_play=true')}>Play Nitsa mix</button>
+//</div>
