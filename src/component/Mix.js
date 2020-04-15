@@ -3,7 +3,7 @@ import PlayButton from './PlayButton';
 import PlayMix from './PlayMix';
 
 // here we pick our our name prop, and then the rest of the props we just pass on through
-const Mix = ({name, ...props}) => (
+const Mix = ({name, pictures, ...props}) => (
   <div className='aspect-ratio aspect-ratio--3x4 pointer bg-black'>
     <PlayMix {...props}>
       <div className='ph3 pv4 aspect-ratio--object mix-overlay'>
